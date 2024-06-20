@@ -25,6 +25,9 @@ import de.fhws.fiw.fds.suttondemo.server.api.states.university_modules.*;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.WebApplicationException;
 
 @Path("universities")
 public class UniversityJerseyService extends AbstractJerseyService {
@@ -66,11 +69,17 @@ public class UniversityJerseyService extends AbstractJerseyService {
     @POST
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response createSingleUniversity(final University universityModel) {
-        try {
-            return new PostNewUniversity(this.serviceContext, universityModel).execute();
+          try {
+            System.out.println("UniversityModel: " + universityModel); // Debug bilgisi ekleyin
+            Response response = new PostNewUniversity(this.serviceContext, universityModel).execute();
+            System.out.println("PostNewUniversity response: " + response.getStatus());
+            return response;
         } catch (SuttonWebAppException e) {
             throw new WebApplicationException(Response.status(e.getStatus().getCode())
                     .entity(e.getExceptionMessage()).build());
+        } catch (Exception e) {
+            throw new WebApplicationException(Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(e.getMessage()).build());
         }
     }
 

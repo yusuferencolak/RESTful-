@@ -86,7 +86,8 @@ public class Module extends AbstractModel {
                 "moduleName='" + moduleName + '\'' +
                 ", semester=" + semester +
                 ", creditPoints=" + creditPoints +
-                ", id=" + id +
+                ", selfLinkOnSecond=" + selfLinkOnSecond +
+                ", selfLink=" + selfLink +
                 '}';
     }
 }

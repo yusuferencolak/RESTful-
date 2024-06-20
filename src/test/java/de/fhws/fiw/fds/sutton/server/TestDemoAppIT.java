@@ -1,9 +1,7 @@
 package de.fhws.fiw.fds.sutton.server;
 
-
 import com.github.javafaker.Faker;
 import de.fhws.fiw.fds.suttondemo.client.models.UniversityClientModel;
-import de.fhws.fiw.fds.suttondemo.client.models.ModuleClientModel;
 import de.fhws.fiw.fds.suttondemo.client.rest.DemoRestClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,62 +41,71 @@ public class TestDemoAppIT {
     }
 
     @Test
-    public void testCreateModule() throws IOException {
+    public void test_create_university() throws IOException {
         client.start();
 
-        var module = new ModuleClientModel();
-        module.setModuleName("Introduction to Quantum Computing");
-        module.setSemester(1);
-        module.setCreditPoints(5);
+        var university = new UniversityClientModel();
+        university.setUniName(faker.university().name());
+        university.setCountry(faker.country().name());
+        university.setDepartmant(faker.educator().course());
+        university.setDepartmantUrl(faker.internet().url());
+        university.setContactPerson(faker.name().fullName());
+        university.setSendStudents(faker.number().numberBetween(5, 20));
+        university.setAcceptStudents(faker.number().numberBetween(20, 50));
+        university.setFirstDaySpring(LocalDate.of(2024, 3, 15));
+        university.setFirstDayAutumn(LocalDate.of(2024, 10, 1));
 
-        client.createModule(module);
+        client.createUniversity(university);
         assertEquals(201, client.getLastStatusCode());
     }
 
     @Test
-    public void testGetSingleModule() throws IOException {
+    void test_create_university_and_get_new_university() throws IOException {
         client.start();
 
-        var module = new ModuleClientModel();
-        module.setModuleName("Introduction to Quantum Computing");
-        module.setSemester(1);
-        module.setCreditPoints(5);
+        var university = new UniversityClientModel();
+        university.setUniName(faker.university().name());
+        university.setCountry(faker.country().name());
+        university.setDepartmant(faker.educator().course());
+        university.setDepartmantUrl(faker.internet().url());
+        university.setContactPerson(faker.name().fullName());
+        university.setSendStudents(faker.number().numberBetween(5, 20));
+        university.setAcceptStudents(faker.number().numberBetween(20, 50));
+        university.setFirstDaySpring(LocalDate.of(2024, 3, 15));
+        university.setFirstDayAutumn(LocalDate.of(2024, 10, 1));
 
-        client.createModule(module);
+        client.createUniversity(university);
         assertEquals(201, client.getLastStatusCode());
-
-        assertTrue(client.isGetSingleModuleAllowed());
-
-        client.getSingleModule();
+        client.getSingleUniversity();
         assertEquals(200, client.getLastStatusCode());
 
-        var moduleFromServer = client.moduleData().getFirst();
-        assertEquals("Introduction to Quantum Computing", moduleFromServer.getModuleName());
-        assertEquals(1, moduleFromServer.getSemester());
-        assertEquals(5, moduleFromServer.getCreditPoints());
+        var universityFromServer = client.universityData().getFirst();
+        assertEquals(university.getUniName(), universityFromServer.getUniName());
     }
 
     @Test
-    public void testGetAllModules() throws IOException {
-        // Create 5 modules
+    void test_create_5_universities_and_get_all() throws IOException {
         for (int i = 0; i < 5; i++) {
             client.start();
 
-            var module = new ModuleClientModel();
-            module.setModuleName("Introduction to Quantum Computing");
-            module.setSemester(1);
-            module.setCreditPoints(5);
+            UniversityClientModel university = new UniversityClientModel();
+            university.setUniName(faker.university().name());
+            university.setCountry(faker.country().name());
+            university.setDepartmant(faker.educator().course());
+            university.setDepartmantUrl(faker.internet().url());
+            university.setContactPerson(faker.name().fullName());
+            university.setSendStudents(faker.number().numberBetween(0, 100));
+            university.setAcceptStudents(faker.number().numberBetween(0, 100));
+            university.setFirstDaySpring(LocalDate.of(2024, 3, 15));
+            university.setFirstDayAutumn(LocalDate.of(2024, 10, 1));
 
-            client.createModule(module);
+            client.createUniversity(university);
             assertEquals(201, client.getLastStatusCode());
         }
 
-        // Retrieve all modules
         client.start();
-        assertTrue(client.isGetAllModulesAllowed());
-
-        client.getAllModules();
+        client.getAllUniversities();
         assertEquals(200, client.getLastStatusCode());
-        assertEquals(5, client.moduleData().size());
+        assertTrue(client.universityData().size() >= 5);
     }
 }

@@ -1,12 +1,15 @@
 package de.fhws.fiw.fds.suttondemo.client.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import de.fhws.fiw.fds.sutton.client.converters.ClientLinkJsonConverter;
 import de.fhws.fiw.fds.sutton.client.model.AbstractClientModel;
 import de.fhws.fiw.fds.sutton.client.utils.Link;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.time.LocalDate;
 
+@XmlRootElement
 public class UniversityClientModel extends AbstractClientModel {
     private String uniName;
 
@@ -22,16 +25,16 @@ public class UniversityClientModel extends AbstractClientModel {
 
     private int acceptStudents;
 
-    private LocalDate firstDaySpring;
+    private LocalDate firstDaySpring = LocalDate.of(2024, 1, 1);
 
-    private LocalDate firstDayAutumn;
+    private LocalDate firstDayAutumn = LocalDate.of(2024, 9, 1);
 
-
-    @JsonDeserialize(using = ClientLinkJsonConverter.class)
-    private transient Link selfLinkOnSecond;
 
     @JsonDeserialize(using = ClientLinkJsonConverter.class)
-    private transient Link selfLink;
+    private Link selfLink;
+
+    @JsonDeserialize(using = ClientLinkJsonConverter.class)
+    private Link module;
 
     public UniversityClientModel() {
     }
@@ -120,14 +123,7 @@ public class UniversityClientModel extends AbstractClientModel {
         this.firstDayAutumn = firstDayAutumn;
     }
 
-    public Link getSelfLinkOnSecond() {
-        return selfLinkOnSecond;
-    }
-
-    public void setSelfLinkOnSecond(Link selfLinkOnSecond) {
-        this.selfLinkOnSecond = selfLinkOnSecond;
-    }
-
+    @JsonIgnore
     public Link getSelfLink() {
         return selfLink;
     }
@@ -135,6 +131,16 @@ public class UniversityClientModel extends AbstractClientModel {
     public void setSelfLink(Link selfLink) {
         this.selfLink = selfLink;
     }
+
+    @JsonIgnore
+    public Link getModule() {
+        return module;
+    }
+
+    public void setModule(Link module) {
+        this.module = module;
+    }
+
     @Override
     public String toString() {
         return "UniversityClientModel{" +
