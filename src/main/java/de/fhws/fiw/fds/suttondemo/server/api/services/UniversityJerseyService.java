@@ -35,14 +35,14 @@ public class UniversityJerseyService extends AbstractJerseyService {
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response getAllUniversities(
-            @DefaultValue("") @QueryParam("firstname") final String firstName,
-            @DefaultValue("") @QueryParam("lastname") final String lastName,
+            @DefaultValue("") @QueryParam("uniName") final String uniName,
+            @DefaultValue("") @QueryParam("country") final String country,
             @DefaultValue("0") @QueryParam("offset") int offset,
             @DefaultValue("20") @QueryParam("size") int size) {
         try {
             return new GetAllUniversities(
                     this.serviceContext,
-                    new QueryByNameAndCountry<>(firstName, lastName, offset, size)
+                    new QueryByNameAndCountry<>(uniName, country, offset, size)
             ).execute();
         } catch (SuttonWebAppException e) {
             throw new WebApplicationException(e.getExceptionMessage(), e.getStatus().getCode());
@@ -101,11 +101,11 @@ public class UniversityJerseyService extends AbstractJerseyService {
     @GET
     @Path("{universityId: \\d+}/modules")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getModulesOfUniversity(@PathParam("universityId") final long universityId,
-                                         @DefaultValue("") @QueryParam("modulename") final String moduleName,
-                                         @DefaultValue("0") @QueryParam("offset") int offset,
-                                         @DefaultValue("20") @QueryParam("size") int size) {
-        try {
+        public Response getModulesOfUniversity(@PathParam("universityId") final long universityId,
+                                             @DefaultValue("") @QueryParam("moduleName") final String moduleName,
+                                             @DefaultValue("0") @QueryParam("offset") int offset,
+                                             @DefaultValue("20") @QueryParam("size") int size) {
+            try {
             return new GetAllModulesOfUniversity(this.serviceContext, universityId, new QueryByModuleName<>(universityId, moduleName, offset, size)).execute();
         } catch (SuttonWebAppException e) {
             throw new WebApplicationException(Response.status(e.getStatus().getCode())

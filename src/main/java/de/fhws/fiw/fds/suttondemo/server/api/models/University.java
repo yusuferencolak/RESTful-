@@ -52,10 +52,10 @@ public class University extends AbstractModel {
     private transient Link selfLink;
 
     @SuttonLink(
-            value = "universities/${id}/module",
+            value = "universities/${id}/modules",
             rel = "getModulesOfUniversity"
     )
-    private transient Link Module;
+    private transient Link module;
 
     public University() {
         // make JPA happy
@@ -164,7 +164,7 @@ public class University extends AbstractModel {
                 ", acceptStudents=" + acceptStudents +
                 ", firstDaySpring=" + firstDaySpring +
                 ", firstDayAutumn=" + firstDayAutumn +
-                ", Module=" + Module +
+                ", Module=" + module +
                 ", id=" + id +
                 '}';
     }
