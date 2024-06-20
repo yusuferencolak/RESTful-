@@ -3,10 +3,6 @@
 This repository belongs to the module "Foundations of Distributed Systems" at the Technical University of
 Applied Sciences Würzburg-Schweinfurt. It contains the Sutton Framework and a demo application that uses the framework.
 
-## Differences between the version used in the videos and this version
-
-This version of Sutton is a bit different from the version used in the videos. The main differences are:
-
 ### New version of some libraries
 
 * It uses Java 21 (without any VM arguments to disable the Java module system)
@@ -89,3 +85,19 @@ Call `mvn verify` to start the integration tests. This will create a Docker imag
 Then the integration tests will be executed. Finally, the container will be stopped and removed. All integration tests must
 be located in the `src/test/java` directory and must end with `IT`. See class `TestDemoAppIT` for an example.
 
+<br>
+<br>
+<br>
+<br>
+<br>
+
+##### WHY I DIDN'T UPLOAD A VIDEO
+
+When I ran mvn verify in the terminal, the system executed without errors, but there are still issues with the remaining requirements.
+
+Despite attempting multiple times to demonstrate the required actions in the video, I couldn't achieve the correct outcome.
+I didn't want it to be a waste of your time. Even after changing the URL, the system continued to throw errors.
+While using Postman, only GET, POST, and DELETE requests worked on the URL http://localhost:8080/demo/api/universities,
+but no requests for PUT on universities and any request on modules worked.
+
+Thank you for taking the time again.
