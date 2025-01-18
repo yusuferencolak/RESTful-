@@ -91,13 +91,3 @@ be located in the `src/test/java` directory and must end with `IT`. See class `T
 <br>
 <br>
 
-##### WHY I DIDN'T UPLOAD A VIDEO
-
-When I ran mvn verify in the terminal, the system executed without errors, but there are still issues with the remaining requirements.
-
-Despite attempting multiple times to demonstrate the required actions in the video, I couldn't achieve the correct outcome.
-I didn't want it to be a waste of your time. Even after changing the URL, the system continued to throw errors.
-While using Postman, only GET, POST, and DELETE requests worked on the URL http://localhost:8080/demo/api/universities,
-but no requests for PUT on universities and any request on modules worked.
-
-Thank you for taking the time again.
